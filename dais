@@ -1,0 +1,56 @@
+#!/usr/bin/env php
+<?php
+
+// https://moquet.net/blog/distributing-php-cli/
+
+use Dais\PlatformShFacade;
+
+require 'vendor/autoload.php';
+
+$placeholder = '%site-url%';
+
+function error($message)
+{
+    fwrite(STDERR, $message . "\n");
+    exit(1);
+}
+
+if (empty($argv[1]) || !file_exists($argv[1])) {
+    error('Please supply a file with a ' . $placeholder . ' placeholder to rewrite.');
+}
+
+$file = $argv[1];
+
+$token = trim(getenv('DAIS_PLATFORMSH_KEY'));
+if (empty($token)) {
+    error("Please set the DAIS_PLATFORMSH_KEY env var to a valid Platform.sh API key.");
+}
+
+$platformId = trim(getenv('DAIS_PLATFORMSH_ID'));
+if (empty($platformId)) {
+    error("Please set the DAIS_PLATFORMSH_ID env var to Platform.sh site.");
+}
+
+$sha = trim(getenv('CIRCLE_SHA1'));
+if (empty($sha)) {
+    error("Could not find a SHA from CircleCI.");
+}
+
+$prNum = '';
+if (preg_match('/(\d+)$/', trim(getenv('CI_PULL_REQUEST')), $matches)) {
+    $prNum = $matches[1];
+}
+if (empty($prNum)) {
+    error("Could not find a pull request number from CircleCI.");
+}
+
+try {
+    $facade = new PlatformShFacade(PlatformShFacade::getClient($token));
+    $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
+    $url = rtrim($url, '/');
+    $content = file_get_contents($file);
+    $content = preg_replace("/$placeholder/", $url, $content);
+    file_put_contents($file, $content);
+} catch (\Exception $e) {
+    error($e->getMessage());
+}

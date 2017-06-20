@@ -1,0 +1,4 @@
+suites:
+  dais_suite:
+    namespace: Dais
+    psr4_prefix: Dais

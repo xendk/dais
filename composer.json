@@ -1,0 +1,13 @@
+{
+    "require": {
+        "platformsh/client": "@stable"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dais\\": "src"
+        }
+    }
+}
