@@ -1,0 +1,16 @@
+{
+    "alias": "dais.phar",
+    "chmod": "0755",
+    "files": ["src/PlatformShFacade.php"],
+    "finder": [
+        {
+            "name": "*.php",
+            "in": "vendor"
+        }
+    ],
+
+    "main": "dais",
+    "output": "dais.phar",
+    "output": "dais-@git-version@.phar",
+    "stub": true
+}
