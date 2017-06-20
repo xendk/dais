@@ -1,4 +1,16 @@
 {
+    "name": "xendk/dais",
+    "description": "Tool for holding test run until Platform.sh environment is ready",
+    "homepage": "https://github.com/xendk/dais",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Thomas Fini Hansen",
+            "email": "xen@xen.dk",
+            "homepage": "http://xen.dk",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "platformsh/client": "@stable"
     },
