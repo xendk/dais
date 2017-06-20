@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-// https://moquet.net/blog/distributing-php-cli/
-
 use Dais\PlatformShFacade;
 
 require 'vendor/autoload.php';
