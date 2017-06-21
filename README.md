@@ -1,6 +1,7 @@
 Dais
 ====
 
+[![Build Status](https://travis-ci.org/xendk/dais.svg?branch=master)](https://travis-ci.org/xendk/dais)
 [![Code Climate](https://codeclimate.com/github/xendk/dais/badges/gpa.svg)](https://codeclimate.com/github/xendk/dais)
 [![Issue Count](https://codeclimate.com/github/xendk/dais/badges/issue_count.svg)](
 https://codeclimate.com/github/xendk/dais)
