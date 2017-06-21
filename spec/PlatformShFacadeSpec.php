@@ -16,7 +16,7 @@ class PlatformShFacadeSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith(PlatformShFacade::getClient(trim(file_get_contents('api-token'))));
+        $this->beConstructedWith(PlatformShFacade::getClient('dummy'));
     }
 
     function it_is_initializable(PlatformClient $client)
