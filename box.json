@@ -1,7 +1,7 @@
 {
     "alias": "dais.phar",
     "chmod": "0755",
-    "files": ["src/PlatformShFacade.php"],
+    "directories": ["src"],
     "finder": [
         {
             "name": "*.php",
