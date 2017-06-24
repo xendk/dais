@@ -8,7 +8,7 @@
             "in": "vendor"
         }
     ],
-
+    "git-version": "git-version",
     "main": "dais",
     "output": "dais.phar",
     "output": "dais-@git-version@.phar",
