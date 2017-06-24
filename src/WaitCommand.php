@@ -11,16 +11,11 @@ class WaitCommand
     /**
      * Invoke the wait command.
      */
-    public function __invoke($file, InputInterface $input, OutputInterface $output)
+    public function __invoke($files, InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
         $placeholder = '%site-url%';
-
-        if (empty($file) || !file_exists($file)) {
-            $io->error('Please supply a file with a ' . $placeholder . ' placeholder to rewrite.');
-            return 1;
-        }
 
         $token = trim(getenv('DAIS_PLATFORMSH_KEY'));
         if (empty($token)) {
@@ -53,9 +48,15 @@ class WaitCommand
             $facade = new PlatformShFacade(PlatformShFacade::getClient($token));
             $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
             $url = rtrim($url, '/');
-            $content = file_get_contents($file);
-            $content = preg_replace("/$placeholder/", $url, $content);
-            file_put_contents($file, $content);
+            foreach ($files as $file) {
+                if (file_exists($file)) {
+                    $content = file_get_contents($file);
+                    $content = preg_replace("/$placeholder/", $url, $content);
+                    file_put_contents($file, $content);
+                } else {
+                    $io->error($file . " does not exist.");
+                }
+            }
         } catch (\Exception $e) {
             $io->error($e->getMessage());
             return 1;

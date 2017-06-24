@@ -9,7 +9,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $app = new Silly\Edition\PhpDi\Application('Dais', '@git-version@');
 
-$app->command('wait file', 'Dais\\WaitCommand');
+$app->command('wait [files]*', 'Dais\\WaitCommand');
 $app->setDefaultCommand('wait', true);
 
 $app->run();
