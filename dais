@@ -7,9 +7,9 @@ use Dais\WaitCommand;
 require __DIR__ . '/vendor/autoload.php';
 
 
-$app = new Silly\Application();
+$app = new Silly\Edition\PhpDi\Application('Dais', '@git-version@');
 
-$app->command('wait file', new WaitCommand());
+$app->command('wait file', 'Dais\\WaitCommand');
 $app->setDefaultCommand('wait', true);
 
 $app->run();

@@ -13,7 +13,8 @@
     ],
     "require": {
         "platformsh/client": "@stable",
-        "mnapoli/silly": "^1"
+        "mnapoli/silly": "1.5.*",
+        "mnapoli/silly-php-di": "^1"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.0"
