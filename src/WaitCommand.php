@@ -8,43 +8,34 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class WaitCommand
 {
+    const PLATFORM_KEY_ERROR = "Please set the DAIS_PLATFORMSH_KEY env var to a valid Platform.sh API key.";
+    const PLATFORM_ID_ERROR = "Please set the DAIS_PLATFORMSH_ID env var to Platform.sh site.";
+    const CIRCLE_SHA1_ERROR = "Could not find a SHA from CircleCI.";
+    const CIRCLE_PULL_REQUEST_ERROR = "Could not find a pull request number from CircleCI.";
+
     /**
      * Invoke the wait command.
      */
-    public function __invoke($files, InputInterface $input, OutputInterface $output)
+    public function __invoke($files, Env $env, InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
         $placeholder = '%site-url%';
 
-        $token = trim(getenv('DAIS_PLATFORMSH_KEY'));
-        if (empty($token)) {
-            $io->error("Please set the DAIS_PLATFORMSH_KEY env var to a valid Platform.sh API key.");
-            return 1;
-        }
-
-        $platformId = trim(getenv('DAIS_PLATFORMSH_ID'));
-        if (empty($platformId)) {
-            $io->error("Please set the DAIS_PLATFORMSH_ID env var to Platform.sh site.");
-            return 1;
-        }
-
-        $sha = trim(getenv('CIRCLE_SHA1'));
-        if (empty($sha)) {
-            $io->error("Could not find a SHA from CircleCI.");
-            return 1;
-        }
-
-        $prNum = '';
-        if (preg_match('/(\d+)$/', trim(getenv('CI_PULL_REQUEST')), $matches)) {
-            $prNum = $matches[1];
-        }
-        if (empty($prNum)) {
-            $io->error("Could not find a pull request number from CircleCI.");
-            return 1;
-        }
-
         try {
+            $token = $env->get('DAIS_PLATFORMSH_KEY', self::PLATFORM_KEY_ERROR);
+            $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
+            $sha = $env->get('CIRCLE_SHA1', self::CIRCLE_SHA1_ERROR);
+
+            $prNum = '';
+            $pr = $env->get('CI_PULL_REQUEST', self::CIRCLE_PULL_REQUEST_ERROR);
+            if (preg_match('/(\d+)$/', $pr, $matches)) {
+                $prNum = $matches[1];
+            }
+            if (empty($prNum)) {
+                throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
+            }
+
             $facade = new PlatformShFacade(PlatformShFacade::getClient($token));
             $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
             $url = rtrim($url, '/');
