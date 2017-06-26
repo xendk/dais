@@ -6,6 +6,8 @@ use Platformsh\Client\PlatformClient;
 
 class PlatformShFacade
 {
+    const PLATFORM_KEY_ERROR = "Please set the DAIS_PLATFORMSH_KEY env var to a valid Platform.sh API key.";
+
     /**
      * Platform.sh client.
      *
@@ -68,5 +70,14 @@ class PlatformShFacade
         $client = new PlatformClient();
         $client->getConnector()->setApiToken($apiKey, 'exchange');
         return $client;
+    }
+
+    /**
+     * Get a Platform.sh client, configured by environment variables.
+     */
+    public static function fromEnv(Env $env)  {
+        $token = $env->get('DAIS_PLATFORMSH_KEY', self::PLATFORM_KEY_ERROR);
+
+        return new PlatformShFacade(PlatformShFacade::getClient($token));
     }
 }

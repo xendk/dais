@@ -9,6 +9,9 @@ require __DIR__ . '/vendor/autoload.php';
 
 $app = new Silly\Edition\PhpDi\Application('Dais', '@git-version@');
 
+$container = $app->getContainer();
+$container->set(PlatformShFacade::class, DI\factory([PlatformShFacade::class, 'fromEnv']));
+
 $app->command('wait [files]*', 'Dais\\WaitCommand');
 $app->setDefaultCommand('wait', true);
 

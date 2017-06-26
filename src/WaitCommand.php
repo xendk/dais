@@ -8,7 +8,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class WaitCommand
 {
-    const PLATFORM_KEY_ERROR = "Please set the DAIS_PLATFORMSH_KEY env var to a valid Platform.sh API key.";
     const PLATFORM_ID_ERROR = "Please set the DAIS_PLATFORMSH_ID env var to Platform.sh site.";
     const CIRCLE_SHA1_ERROR = "Could not find a SHA from CircleCI.";
     const CIRCLE_PULL_REQUEST_ERROR = "Could not find a pull request number from CircleCI.";
@@ -16,14 +15,13 @@ class WaitCommand
     /**
      * Invoke the wait command.
      */
-    public function __invoke($files, Env $env, InputInterface $input, OutputInterface $output)
+    public function __invoke($files, Env $env, PlatformShFacade $facade, InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
         $placeholder = '%site-url%';
 
         try {
-            $token = $env->get('DAIS_PLATFORMSH_KEY', self::PLATFORM_KEY_ERROR);
             $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
             $sha = $env->get('CIRCLE_SHA1', self::CIRCLE_SHA1_ERROR);
 
@@ -36,7 +34,6 @@ class WaitCommand
                 throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
             }
 
-            $facade = new PlatformShFacade(PlatformShFacade::getClient($token));
             $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
             $url = rtrim($url, '/');
             foreach ($files as $file) {
