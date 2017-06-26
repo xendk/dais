@@ -54,7 +54,7 @@ jobs:
           echo "date.timezone = UTC" | sudo tee /usr/local/etc/php/conf.d/date.ini
           composer install
           wget https://github.com/xendk/dais/releases/download/0.1.0/dais-0.1.0.phar
-          php dais-0.1.0.phar behat.yml
+          php dais-0.2.0.phar behat.yml
           ./vendor/bin/behat --format=junit --out=/tmp/test-reports/behat --format=pretty --out=std
       - store_test_results:
           path: /tmp/test-reports/
