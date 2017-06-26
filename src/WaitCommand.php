@@ -17,9 +17,17 @@ class WaitCommand
      */
     public function __invoke($files, Env $env, PlatformShFacade $facade, InputInterface $input, OutputInterface $output)
     {
-        // Sadly, Silly 1.5 can't inject this for us.
+        // Sadly, Silly 1.5 can't inject this for us. So we create it here and
+        // move the main logic to another method, so we can test it.
         $io = new SymfonyStyle($input, $output);
+        return $this->wait($files, $env, $facade, $io);
+    }
 
+    /**
+     * Wait for environment.
+     */
+    public function wait($files, Env $env, PlatformShFacade $facade, SymfonyStyle $io)
+    {
         $placeholder = '%site-url%';
 
         $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
