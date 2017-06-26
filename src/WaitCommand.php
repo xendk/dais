@@ -17,37 +17,33 @@ class WaitCommand
      */
     public function __invoke($files, Env $env, PlatformShFacade $facade, InputInterface $input, OutputInterface $output)
     {
+        // Sadly, Silly 1.5 can't inject this for us.
         $io = new SymfonyStyle($input, $output);
 
         $placeholder = '%site-url%';
 
-        try {
-            $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
-            $sha = $env->get('CIRCLE_SHA1', self::CIRCLE_SHA1_ERROR);
+        $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
+        $sha = $env->get('CIRCLE_SHA1', self::CIRCLE_SHA1_ERROR);
 
-            $prNum = '';
-            $pr = $env->get('CI_PULL_REQUEST', self::CIRCLE_PULL_REQUEST_ERROR);
-            if (preg_match('/(\d+)$/', $pr, $matches)) {
-                $prNum = $matches[1];
-            }
-            if (empty($prNum)) {
-                throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
-            }
+        $prNum = '';
+        $pr = $env->get('CI_PULL_REQUEST', self::CIRCLE_PULL_REQUEST_ERROR);
+        if (preg_match('/(\d+)$/', $pr, $matches)) {
+            $prNum = $matches[1];
+        }
+        if (empty($prNum)) {
+            throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
+        }
 
-            $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
-            $url = rtrim($url, '/');
-            foreach ($files as $file) {
-                if (file_exists($file)) {
-                    $content = file_get_contents($file);
-                    $content = preg_replace("/$placeholder/", $url, $content);
-                    file_put_contents($file, $content);
-                } else {
-                    $io->error($file . " does not exist.");
-                }
+        $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
+        $url = rtrim($url, '/');
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                $content = file_get_contents($file);
+                $content = preg_replace("/$placeholder/", $url, $content);
+                file_put_contents($file, $content);
+            } else {
+                $io->error($file . " does not exist.");
             }
-        } catch (\Exception $e) {
-            $io->error($e->getMessage());
-            return 1;
         }
     }
 }
