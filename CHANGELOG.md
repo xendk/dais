@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
-## 0.2.0
+## 0.2.0 - 2017-06-27
 ### Added
 - CodeClimate and Travis setups
 - CHANGELOG.md
@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use dependency injection
 - Downgrade dependencies so it should be 5.6 compatible
 
-## 0.1.0
+## 0.1.0 - 2017-06-27
 ### Added
 - Initial implementation
 - Box built phar
