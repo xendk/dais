@@ -7,4 +7,21 @@ php:
 
 install: composer install --prefer-source
 
-script: ./vendor/bin/phpspec run
+script: "./vendor/bin/phpspec run"
+
+after_success:
+  - composer global require kherge/box --prefer-dist
+  - composer install --no-dev
+  - "~/.composer/vendor/bin/box build --no-interaction"
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: XYpSkyfMYy8YdhE+43ryxWN3sM5v/QPpIdqqrOvEJFH9RYlxFlKsjLRO6ZAFazkIbI7Ep98AxDO48SkIQ/mia6acQYlT5/0+i+y3e/LJdQ9WM4mG3hUVyfe38ECVEWU1og0UOHSEsd/BfgGmBPivhrXPeRnFECHFgS6TQ7lgBFJAkkHLs2hSj43CP1jEa3NGm0KzQ/GdOyng6cMmP071pE1K+TdHkRGOzTUK49OHEqwtjgQg4wTXQeYCETbneocbX1RrfVQu9bkZZsyd/r3mu0O3xaCPuSExtp6+p9Fc2isZxmDcnRWTfgFg0bdghNFsUa9yl97xdTtvggJJG4A0xZi5IQg2FD08cAn1eKxy6wsnmdbGqtHmlQZ1cEuIA8n6Z7C6sVDr7kSM27LqZaSohXIOd0LAGr35nAyOmGUkC1VUVyKYqMFHOTgs5DFvNLtL3uaczL1s1mHI2cMe5w6NS42I8V0RjYGjU0TRlQ7d1Gl/YFvLDSKxGeVfyOBthDkRBG0FwjO76uRCmXV0JL1t91OnWDC5tXk0xyO6rk9gRdWZiV7FkGE2T7Ml5V82Nc1DJKLYrU8o+D5IfRIdsXR8vs+CyfeaBTwyc8Q55Be84IVzrBXvaBx+Tn/qXwBA3n5RRSR1/kGDYvnDxCfUF6eZIrLc7lrw62q+qNRE/c7bGQ0=
+  file_glob: true
+  file: dais-*.phar
+  on:
+    repo: xendk/dais
+    tags: true
+    php: '5.6'
