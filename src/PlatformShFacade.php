@@ -3,6 +3,7 @@
 namespace Dais;
 
 use Platformsh\Client\PlatformClient;
+use Platformsh\Client\Model\Project;
 
 class PlatformShFacade
 {
@@ -25,15 +26,7 @@ class PlatformShFacade
 
     public function waitFor($projectId, $environmentName, $sha)
     {
-        $project = $this->client->getProject($projectId);
-        if (!$project) {
-            throw new \RuntimeException(sprintf('Project %s not found.', $projectId));
-        }
-
-        $environment = $project->getEnvironment($environmentName);
-        if (!$environment) {
-            throw new \RuntimeException(sprintf('Environment %s not found.', $environment));
-        }
+        $environment = $this->getEnvironment($this->getProject($projectId), $environmentName);
 
         // Environments in the process of being deployed will return the 'dirty' status.
         if (!in_array($environment['status'], ['active', 'dirty'])) {
@@ -63,6 +56,32 @@ class PlatformShFacade
     }
 
     /**
+     * Get a Platform.sh project.
+     */
+    protected function getProject($projectId)
+    {
+        $project = $this->client->getProject($projectId);
+        if (!$project) {
+            throw new \RuntimeException(sprintf('Project %s not found.', $projectId));
+        }
+
+        return $project;
+    }
+
+    /**
+     * Get an environment from a project.
+     */
+    protected function getEnvironment(Project $project, $environmentName)
+    {
+        $environment = $project->getEnvironment($environmentName);
+        if (!$environment) {
+            throw new \RuntimeException(sprintf('Environment %s not found.', $environment));
+        }
+
+        return $environment;
+    }
+
+    /**
      * Get a Platform.sh client.
      */
     public static function getClient($apiKey)
@@ -75,7 +94,8 @@ class PlatformShFacade
     /**
      * Get a Platform.sh client, configured by environment variables.
      */
-    public static function fromEnv(Env $env)  {
+    public static function fromEnv(Env $env)
+    {
         $token = $env->get('DAIS_PLATFORMSH_KEY', self::PLATFORM_KEY_ERROR);
 
         return new PlatformShFacade(PlatformShFacade::getClient($token));
