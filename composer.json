@@ -17,7 +17,8 @@
         "mnapoli/silly-php-di": "^1"
     },
     "require-dev": {
-        "phpspec/phpspec": "^3.0"
+        "phpspec/phpspec": "^3.0",
+        "bossa/phpspec2-expect": "^2"
     },
     "autoload": {
         "psr-4": {

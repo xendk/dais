@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "44d8dcc3b0788d2002a36c9fb27f2a34",
+    "content-hash": "a44b9f6d6c12e428a94060c99c9a2fe0",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1105,6 +1105,55 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bossa/phpspec2-expect",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BossaConsulting/phpspec2-expect.git",
+                "reference": "6c7767648e9f1778d851c0e67941c3f125208357"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BossaConsulting/phpspec2-expect/zipball/6c7767648e9f1778d851c0e67941c3f125208357",
+                "reference": "6c7767648e9f1778d851c0e67941c3f125208357",
+                "shasum": ""
+            },
+            "require": {
+                "phpspec/phpspec": "~3.2 <3.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.6|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "expect.php"
+                ],
+                "psr-0": {
+                    "Bossa\\PhpSpec\\Expect\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcello Duarte",
+                    "homepage": "http://marcelloduarte.net/"
+                }
+            ],
+            "description": "Helper that decorates any SUS with a phpspec lazy object wrapper",
+            "keywords": [
+                "BDD",
+                "SpecBDD",
+                "TDD",
+                "spec",
+                "specification"
+            ],
+            "time": "2017-07-26T12:11:23+00:00"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "1.0.5",

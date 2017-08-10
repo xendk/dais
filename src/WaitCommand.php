@@ -45,13 +45,31 @@ class WaitCommand
         $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
         $url = rtrim($url, '/');
         foreach ($files as $file) {
-            if (file_exists($file)) {
-                $content = file_get_contents($file);
-                $content = preg_replace("/$placeholder/", $url, $content);
-                file_put_contents($file, $content);
-            } else {
-                $io->error($file . " does not exist.");
+            try {
+                $this->fileReplace($file, $placeholder, $url, $io);
+            } catch (\RuntimeException $e) {
+                $io->error($e->getMessage());
             }
+        }
+    }
+
+    /**
+     * Replace placeholder in file.
+     */
+    protected function fileReplace($file, $placeholder, $url)
+    {
+        if (!file_exists($file)) {
+            throw new \RuntimeException($file . " does not exist.");
+        }
+
+        $content = file_get_contents($file);
+        if ($content === false) {
+            throw new \RuntimeException("Could not read " . $file . ".");
+        }
+
+        $content = preg_replace("/$placeholder/", $url, $content);
+        if (file_put_contents($file, $content) === false) {
+            throw new \RuntimeException("Error writing " . $file . ".");
         }
     }
 }
