@@ -98,6 +98,6 @@ class PlatformShFacade
     {
         $token = $env->get('DAIS_PLATFORMSH_KEY', self::PLATFORM_KEY_ERROR);
 
-        return new PlatformShFacade(PlatformShFacade::getClient($token));
+        return new PlatformShFacade(self::getClient($token));
     }
 }
