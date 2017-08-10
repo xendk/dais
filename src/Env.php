@@ -12,7 +12,7 @@ class Env
      * @param string $name
      *   Name of variable.
      * @param string $errorMessage
-     *   Error message of exception, it the variable is not set.
+     *   Error message of exception, if the variable is not set.
      *
      * @return string|false
      *   Value of variable, or false if not set.
