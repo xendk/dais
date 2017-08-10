@@ -1,0 +1,12 @@
+suites:
+  dais_suite:
+    namespace: Dais
+    psr4_prefix: Dais
+extensions:
+  LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    format:
+      - clover
+    output:
+      clover: clover.xml
+      
+        

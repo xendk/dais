@@ -5,6 +5,7 @@ Dais
 [![Code Climate](https://codeclimate.com/github/xendk/dais/badges/gpa.svg)](https://codeclimate.com/github/xendk/dais)
 [![Issue Count](https://codeclimate.com/github/xendk/dais/badges/issue_count.svg)](
 https://codeclimate.com/github/xendk/dais)
+[![Test Coverage](https://codeclimate.com/github/xendk/dais/badges/coverage.svg)](https://codeclimate.com/github/xendk/dais/coverage)
 
 Dais holds back CirclCI builds on GitHub pull requests until
 Platform.sh has brought up the corresponding environment.

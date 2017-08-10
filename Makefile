@@ -2,6 +2,8 @@
 # why not use it?
 SHELL=/usr/bin/fish
 
+.PHONY: build relase coverage coverage-ci
+
 build:
 	composer install --no-dev
 	./box build
@@ -25,3 +27,9 @@ release:
 	@git add -u
 	@git commit -m"Release $(version)"
 	@git tag $(version)
+
+coverage:
+	@phpdbg -qrr ./vendor/bin/phpspec run -c .phpspec.coverage.yml
+
+coverage-ci:
+	@phpdbg -qrr ./vendor/bin/phpspec run -c .phpspec.coverage-ci.yml
