@@ -8,8 +8,8 @@ php:
 install: composer install --prefer-source
 
 script:
-  - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then ./vendor/bin/phpspec run -c .phpspec.coverage-ci.yml; else ./vendor/bin/phpspec run; fi
-  - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then bash <(curl -s https://codecov.io/bash) ; fi
+  - ./vendor/bin/phpspec run -c .phpspec.coverage-ci.yml
+  - bash <(curl -s https://codecov.io/bash)
   
 after_success:
   - composer global require kherge/box --prefer-dist
