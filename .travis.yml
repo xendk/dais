@@ -7,14 +7,9 @@ php:
 
 install: composer install --prefer-source
 
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-
 script:
-  - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then ./cc-test-reporter before-build; fi
-  - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then composer require --dev leanphp/phpspec-code-coverage && ./vendor/bin/phpspec run -c .phpspec.coverage-ci.yml; else ./vendor/bin/phpspec run; fi
-  - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT; fi
+  - ./vendor/bin/phpspec run -c .phpspec.coverage-ci.yml
+  - bash <(curl -s https://codecov.io/bash)
   
 after_success:
   - composer global require kherge/box --prefer-dist
