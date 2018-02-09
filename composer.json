@@ -11,6 +11,11 @@
             "role": "Developer"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "5.6"
+        }
+    },
     "require": {
         "platformsh/client": "@stable",
         "mnapoli/silly": "1.5.*",
