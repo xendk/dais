@@ -4,7 +4,7 @@ Dais
 [![Build Status](https://img.shields.io/travis/xendk/dais.svg?style=for-the-badge)](https://travis-ci.org/xendk/dais)
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/xendk/dais.svg?style=for-the-badge)](https://codeclimate.com/github/xendk/dais)
 [![Code Climate](https://img.shields.io/codeclimate/issues/github/xendk/dais.svg?style=for-the-badge)](https://codeclimate.com/github/xendk/dais)
-[![Codecov](https://img.shields.io/codecov/c/github/xendk/dais.svg?style=for-the-badge)](https://codeclimate.com/github/xendk/dais/coverage)
+[![Codecov](https://img.shields.io/codecov/c/github/xendk/dais.svg?style=for-the-badge)](https://codecov.io/gh/xendk/dais/branch/master)
 
 Dais holds back CirclCI builds on GitHub pull requests until
 Platform.sh has brought up the corresponding environment.
