@@ -19,12 +19,12 @@
     "require": {
         "platformsh/client": "@stable",
         "mnapoli/silly": "1.5.*",
-        "mnapoli/silly-php-di": "^1",
-        "leanphp/phpspec-code-coverage": "^3"
+        "mnapoli/silly-php-di": "^1"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.0",
-        "bossa/phpspec2-expect": "^2"
+        "bossa/phpspec2-expect": "^2",
+        "leanphp/phpspec-code-coverage": "^3"
     },
     "autoload": {
         "psr-4": {
