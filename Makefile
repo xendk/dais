@@ -20,9 +20,9 @@ release:
           false; \
 	end
 	@echo "Updating readme"
-	sed -ie 's/\\/[^/]*\\/dais-.*.phar/\\/$(version)\\/dais-$(version).phar/' README.md
+	@sed -i -e 's/\\/[^/]*\\/dais-.*.phar/\\/$(version)\\/dais-$(version).phar/' README.md
 	@echo "Updating changlog"
-	@sed -ie '/## Unreleased/a \\\n## $(version) - $(shell date +%F)' CHANGELOG.md
+	@sed -i -e '/## Unreleased/a \\\n## $(version) - $(shell date +%F)' CHANGELOG.md
 	@echo "Tagging"
 	@git add -u
 	@git commit -m"Release $(version)"
