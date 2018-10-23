@@ -37,8 +37,8 @@ class PlatformShFacade
         $waitActivity = null;
         foreach ($activities as $activity) {
             if ($activity['type'] == 'environment.push' &&
-                isset($activity['parameters']['github-pr-head']) &&
-                $activity['parameters']['github-pr-head'] == $sha) {
+                isset($activity['parameters']['new_commit']) &&
+                $activity['parameters']['new_commit'] == $sha) {
                 $waitActivity = $activity;
                 break;
             }

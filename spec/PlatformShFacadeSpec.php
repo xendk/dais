@@ -67,7 +67,7 @@ class PlatformShFacadeSpec extends ObjectBehavior
     {
         $activity->offsetGet('type')->willReturn('environment.push');
         $activity->offsetExists('parameters')->willReturn(true);
-        $activity->offsetGet('parameters')->willReturn(['github-pr-head' => 'sha']);
+        $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
         $activity->isComplete()->willReturn(true);
         $environment->offsetGet('status')->willReturn('active');
         $environment->getActivities(10)->willReturn([$activity]);
@@ -84,7 +84,7 @@ class PlatformShFacadeSpec extends ObjectBehavior
     {
         $activity->offsetGet('type')->willReturn('environment.push');
         $activity->offsetExists('parameters')->willReturn(true);
-        $activity->offsetGet('parameters')->willReturn(['github-pr-head' => 'sha']);
+        $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
         $activity->isComplete()->willReturn(false);
         $activity->wait()->willReturn();
         $environment->offsetGet('status')->willReturn('dirty');
