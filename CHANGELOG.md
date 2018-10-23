@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Test coverage reporting
 
 ### Changed
+- Platform.sh changed the parameter name for the sha
 - Code style improvements and refactorings
 
 ## 0.3.0 - 2017-06-27
