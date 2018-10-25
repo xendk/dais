@@ -24,6 +24,12 @@ class PlatformShFacade
         $this->client = $client;
     }
 
+    /**
+     * Wait for environment to be ready and return a list of urls for the environment.
+     *
+     * The first entry is the public url for the environment.
+     * Any following entries are urls to routes for the environment.
+     */
     public function waitFor($projectId, $environmentName, $sha)
     {
         $environment = $this->getEnvironment($this->getProject($projectId), $environmentName);
@@ -52,7 +58,11 @@ class PlatformShFacade
             $waitActivity->wait();
         }
 
-        return $environment->getPublicUrl();
+        return array_merge(
+            [$environment->getPublicUrl()],
+            $environment->getRouteUrls()
+        );
+
     }
 
     /**
