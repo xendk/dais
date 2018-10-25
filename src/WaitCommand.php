@@ -44,7 +44,7 @@ class WaitCommand
         $urls = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
         $placeholder_urls = [];
         foreach ($urls as $index => $url) {
-            $placeholder = ($index === 0) ? "%site-url%" : "%site-url:$index%";
+            $placeholder = ($index === 0) ? "%site-url%" : "%route-url:$index%";
             $placeholder_urls[$placeholder] = $url;
         }
 

@@ -38,8 +38,8 @@ have a `%site-url%` placeholder that will be replaced with the URL of
 the Platform.sh environment, with any trailing slashes stripped.
 
 If your Platform.sh project uses [Routes](https://docs.platform.sh/configuration/routes.html) 
-you can refer to route URLs using the pattern `%site-url:[route-index]%`.
-`%site-url:1%` is the URL to the first route etc. 
+you can refer to route URLs using the pattern `%route-url:[route-index]%`.
+`%route-url:1%` is the URL to the first route etc. 
 
 Working `.circleci/config.yml`:
 

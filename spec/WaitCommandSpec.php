@@ -51,9 +51,9 @@ class WaitCommandSpec extends ObjectBehavior
 
     function it_replaces_file_route_placeholders(Env $env, PlatformShFacade $facade, Environment $environment, SymfonyStyle $io) {
         $file1 = tempnam(sys_get_temp_dir(), 'dais-test-');
-        file_put_contents($file1, 'lala %site-url% lolo %site-url:1%');
+        file_put_contents($file1, 'lala %site-url% lolo %route-url:1%');
         $file2 = tempnam(sys_get_temp_dir(), 'dais-test-');
-        file_put_contents($file2, 'banana %site-url% ananas %site-url:2%');
+        file_put_contents($file2, 'banana %site-url% ananas %route-url:2%');
 
         $env->get('DAIS_PLATFORMSH_ID', Argument::any())->willReturn('env');
         $env->get('CIRCLE_SHA1', Argument::any())->willReturn('sha');
