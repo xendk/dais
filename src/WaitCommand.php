@@ -73,7 +73,7 @@ class WaitCommand
             throw new \RuntimeException("Could not read " . $file . ".");
         }
 
-        $content = str_replace(array_keys($placeholder_map), $placeholder_map, $content);
+        $content = strtr($content, $placeholder_map);
         if (file_put_contents($file, $content) === false) {
             throw new \RuntimeException("Error writing " . $file . ".");
         }
