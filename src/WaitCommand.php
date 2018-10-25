@@ -28,7 +28,6 @@ class WaitCommand
      */
     public function wait($files, Env $env, PlatformShFacade $facade, SymfonyStyle $io)
     {
-        $placeholder = '%site-url%';
 
         $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
         $sha = $env->get('CIRCLE_SHA1', self::CIRCLE_SHA1_ERROR);
@@ -42,13 +41,21 @@ class WaitCommand
             throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
         }
 
-        $url = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
-        $url = rtrim($url, '/');
-        foreach ($files as $file) {
-            try {
-                $this->fileReplace($file, $placeholder, $url, $io);
-            } catch (\RuntimeException $e) {
-                $io->error($e->getMessage());
+        $urls = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
+        $placeholder_urls = [];
+        foreach ($urls as $index => $url) {
+            $placeholder = ($index === 0) ? "%site-url%" : "%site-url:$index%";
+            $placeholder_urls[$placeholder] = $url;
+        }
+
+        foreach ($placeholder_urls as $placeholder => $url) {
+            $url = rtrim($url, '/');
+            foreach ($files as $file) {
+                try {
+                    $this->fileReplace($file, $placeholder, $url, $io);
+                } catch (\RuntimeException $e) {
+                    $io->error($e->getMessage());
+                }
             }
         }
     }

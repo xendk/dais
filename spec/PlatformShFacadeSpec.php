@@ -72,12 +72,31 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->offsetGet('status')->willReturn('active');
         $environment->getActivities(10)->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn([]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
         $this->beConstructedWith($client);
 
-        $this->waitFor('project_id', 'env', 'sha')->shouldReturn('the-url');
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
+    }
+
+    function it_returns_route_urls(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
+    {
+        $activity->offsetGet('type')->willReturn('environment.push');
+        $activity->offsetExists('parameters')->willReturn(true);
+        $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
+        $activity->isComplete()->willReturn(true);
+        $environment->offsetGet('status')->willReturn('active');
+        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn(['route-url-1', 'route-url-2']);
+        $project->getEnvironment('env')->willReturn($environment);
+        $client->getProject('project_id')->willReturn($project);
+
+        $this->beConstructedWith($client);
+
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url', 'route-url-1', 'route-url-2']);
     }
 
     function it_waits_on_incomplete_activity(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
@@ -90,11 +109,12 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->offsetGet('status')->willReturn('dirty');
         $environment->getActivities(10)->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn([]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
         $this->beConstructedWith($client);
 
-        $this->waitFor('project_id', 'env', 'sha')->shouldReturn('the-url');
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
     }
 }
