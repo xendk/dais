@@ -45,25 +45,24 @@ class WaitCommand
         $placeholder_urls = [];
         foreach ($urls as $index => $url) {
             $placeholder = ($index === 0) ? "%site-url%" : "%route-url:$index%";
-            $placeholder_urls[$placeholder] = $url;
+            $placeholder_urls[$placeholder] = rtrim($url, '/');
         }
 
-        foreach ($placeholder_urls as $placeholder => $url) {
-            $url = rtrim($url, '/');
-            foreach ($files as $file) {
-                try {
-                    $this->fileReplace($file, $placeholder, $url, $io);
-                } catch (\RuntimeException $e) {
-                    $io->error($e->getMessage());
-                }
+        foreach ($files as $file) {
+            try {
+                $this->fileReplace($file, $placeholder_urls);
+            } catch (\RuntimeException $e) {
+                $io->error($e->getMessage());
             }
         }
     }
 
     /**
-     * Replace placeholder in file.
+     * Replace placeholders in file.
+     *
+     * Placeholders must be an map of placeholder strings and their corresponding values.
      */
-    protected function fileReplace($file, $placeholder, $url)
+    protected function fileReplace($file, array $placeholder_map)
     {
         if (!file_exists($file)) {
             throw new \RuntimeException($file . " does not exist.");
@@ -74,7 +73,7 @@ class WaitCommand
             throw new \RuntimeException("Could not read " . $file . ".");
         }
 
-        $content = preg_replace("/$placeholder/", $url, $content);
+        $content = str_replace(array_keys($placeholder_map), $placeholder_map, $content);
         if (file_put_contents($file, $content) === false) {
             throw new \RuntimeException("Error writing " . $file . ".");
         }
