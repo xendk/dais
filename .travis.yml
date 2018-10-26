@@ -12,9 +12,9 @@ script:
   - bash <(curl -s https://codecov.io/bash)
   
 after_success:
-  - composer global require kherge/box --prefer-dist
   - composer install --no-dev
-  - "~/.composer/vendor/bin/box build --no-interaction"
+  - wget https://github.com/box-project/box2/releases/download/2.7.5/box-2.7.5.phar
+  - php box-2.7.5.phar build --no-interaction
 
 deploy:
   skip_cleanup: true

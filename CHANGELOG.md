@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+- Go back to box-project/box2, we need PHP 5.6 support
 
 ## 0.7.1 - 2018-10-26
 ### Changed
