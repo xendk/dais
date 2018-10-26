@@ -5,10 +5,7 @@ SHELL=/usr/bin/fish
 .PHONY: build relase coverage coverage-ci
 
 build:
-	composer install --no-dev
-	./box build
-	# Restore dev dependencies.
-	composer install
+	./box compile
 
 release:
 	@if string match -qrv '^[0-9]+\.[0-9]+\.[0-9]+$$' $(version); \
@@ -20,7 +17,7 @@ release:
           false; \
 	end
 	@echo "Updating readme"
-	@sed -i -e 's/\\/[^/]*\\/dais-.*.phar/\\/$(version)\\/dais-$(version).phar/' README.md
+	@sed -i -e 's/\\/[^/]*\\/dais.phar/\\/$(version)\\/dais.phar/' README.md
 	@echo "Updating changlog"
 	@sed -i -e '/## Unreleased/a \\\n## $(version) - $(shell date +%F)' CHANGELOG.md
 	@echo "Tagging"

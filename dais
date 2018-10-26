@@ -7,7 +7,7 @@ use Dais\WaitCommand;
 require __DIR__ . '/vendor/autoload.php';
 
 
-$app = new Silly\Edition\PhpDi\Application('Dais', '@git-version@');
+$app = new Silly\Edition\PhpDi\Application('Dais', '@git-tag@');
 
 $container = $app->getContainer();
 $container->set(PlatformShFacade::class, DI\factory([PlatformShFacade::class, 'fromEnv']));
