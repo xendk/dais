@@ -6,6 +6,10 @@
         {
             "name": "*.php",
             "in": "vendor"
+        },
+        {
+            "name": "*.txt",
+            "in": "vendor"
         }
     ],
     "git-version": "git-version",
