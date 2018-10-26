@@ -20,7 +20,8 @@ release:
           false; \
 	end
 	@echo "Updating readme"
-	@sed -i -e 's/\\/[^/]*\\/dais-.*.phar/\\/$(version)\\/dais-$(version).phar/' README.md
+	@sed -i -e 's/\\/[^/]*\\/dais-.*.phar/\\/$(version)\\/dais-$(version).phar/' \
+		-e 's/dais-.*.phar/dais-$(version).phar/' README.md
 	@echo "Updating changlog"
 	@sed -i -e '/## Unreleased/a \\\n## $(version) - $(shell date +%F)' CHANGELOG.md
 	@echo "Tagging"
