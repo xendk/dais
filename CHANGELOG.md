@@ -5,9 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+- Fetch box.phar instead of using composer install
 
 ## 0.7.0 - 2018-10-26
-### Use humbug box fork
+### Changed
+- Use humbug box fork
 
 ## 0.6.0 - 2018-10-25
 ### Changed

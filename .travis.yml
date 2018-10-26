@@ -12,9 +12,8 @@ script:
   - bash <(curl -s https://codecov.io/bash)
   
 after_success:
-  - composer global require humbug/box --prefer-dist
-  - composer install --no-dev
-  - "~/.composer/vendor/bin/box compile --no-interaction"
+  - wget https://github.com/humbug/box/releases/download/3.1.2/box.phar
+  - php box.phar compile --no-interaction
 
 deploy:
   skip_cleanup: true
