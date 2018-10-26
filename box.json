@@ -1,5 +1,16 @@
 {
     "alias": "dais.phar",
-    "git-tag": "git-tag",
-    "main": "dais"
+    "chmod": "0755",
+    "directories": ["src"],
+    "finder": [
+        {
+            "name": "*.php",
+            "in": "vendor"
+        }
+    ],
+    "git-version": "git-version",
+    "main": "dais",
+    "output": "dais.phar",
+    "output": "dais-@git-version@.phar",
+    "stub": true
 }
