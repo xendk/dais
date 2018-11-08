@@ -99,6 +99,24 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url', 'route-url-1', 'route-url-2']);
     }
 
+    function it_returns_route_urls_in_alphabetical_order(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
+    {
+        $activity->offsetGet('type')->willReturn('environment.push');
+        $activity->offsetExists('parameters')->willReturn(true);
+        $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
+        $activity->isComplete()->willReturn(true);
+        $environment->offsetGet('status')->willReturn('active');
+        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn(['www.the-url', 'api.the-url']);
+        $project->getEnvironment('env')->willReturn($environment);
+        $client->getProject('project_id')->willReturn($project);
+
+        $this->beConstructedWith($client);
+
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url', 'api.the-url', 'www.the-url']);
+    }
+
     function it_waits_on_incomplete_activity(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
         $activity->offsetGet('type')->willReturn('environment.push');

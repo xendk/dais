@@ -28,7 +28,7 @@ class PlatformShFacade
      * Wait for environment to be ready and return a list of urls for the environment.
      *
      * The first entry is the public url for the environment.
-     * Any following entries are urls to routes for the environment.
+     * Any following entries are urls to routes for the environment sorted alphabetically.
      */
     public function waitFor($projectId, $environmentName, $sha)
     {
@@ -58,11 +58,13 @@ class PlatformShFacade
             $waitActivity->wait();
         }
 
+        $routeUrls = $environment->getRouteUrls();
+        // Platform.sh returns urls in a unpredictable order. Sort it alphabetically to make it predictable.
+        sort($routeUrls);
         return array_merge(
             [$environment->getPublicUrl()],
-            $environment->getRouteUrls()
+            $routeUrls
         );
-
     }
 
     /**
