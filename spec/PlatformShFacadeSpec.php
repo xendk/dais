@@ -81,6 +81,24 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
     }
 
+    function it_finds_the_activity_for_post_merge_envs(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
+    {
+        $activity->offsetGet('type')->willReturn('environment.push');
+        $activity->offsetExists('parameters')->willReturn(true);
+        $activity->offsetGet('parameters')->willReturn(['github-pr-head' => 'sha', 'new_commit' => 'wrong sha']);
+        $activity->isComplete()->willReturn(true);
+        $environment->offsetGet('status')->willReturn('active');
+        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn([]);
+        $project->getEnvironment('env')->willReturn($environment);
+        $client->getProject('project_id')->willReturn($project);
+
+        $this->beConstructedWith($client);
+
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
+    }
+
     function it_returns_route_urls(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
         $activity->offsetGet('type')->willReturn('environment.push');
