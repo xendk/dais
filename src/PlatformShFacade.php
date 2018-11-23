@@ -2,6 +2,7 @@
 
 namespace Dais;
 
+use Platformsh\Client\Model\Activity;
 use Platformsh\Client\PlatformClient;
 use Platformsh\Client\Model\Project;
 
@@ -43,13 +44,7 @@ class PlatformShFacade
         $waitActivity = null;
         foreach ($activities as $activity) {
             if ($activity['type'] == 'environment.push' &&
-                // Environments are built post-merge so we have to compare the PR head.
-                (isset($activity['parameters']['github-pr-head'])
-                    && $activity['parameters']['github-pr-head'] == $sha)
-                ||
-                // Environments are built as normal so we compare the new commit.
-                (isset($activity['parameters']['new_commit'])
-                    && $activity['parameters']['new_commit'] == $sha)) {
+                $this->getSha($activity) == $sha) {
                 $waitActivity = $activity;
                 break;
             }
@@ -96,6 +91,20 @@ class PlatformShFacade
         }
 
         return $environment;
+    }
+
+    /**
+     * Returns the Git SHA which an activity corresponds to.
+     */
+    protected function getSha(Activity $activity) {
+        if (isset($activity['parameters']['github-pr-head'])) {
+            // Environments are built post-merge so we have to compare the PR head.
+            return $activity['parameters']['github-pr-head'];
+        }
+        if (isset($activity['parameters']['new_commit'])) {
+            // Environments are built as normal so we compare the new commit.
+            return $activity['parameters']['new_commit'];
+        }
     }
 
     /**
