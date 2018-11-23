@@ -41,7 +41,7 @@ class PlatformShFacade
         }
 
         $activities = $environment->getActivities(10, 'environment.push');
-        $waitActivites = array_filter($activities, function(Activity $activity) use ($sha) {
+        $waitActivites = array_filter($activities, function (Activity $activity) use ($sha) {
             return $this->getSha($activity) == $sha;
         });
         $waitActivity = array_shift($waitActivites);
@@ -92,7 +92,8 @@ class PlatformShFacade
     /**
      * Returns the Git SHA which an activity corresponds to.
      */
-    protected function getSha(Activity $activity) {
+    protected function getSha(Activity $activity)
+    {
         if (isset($activity['parameters']['github-pr-head'])) {
             // Environments are built post-merge so we have to compare the PR head.
             return $activity['parameters']['github-pr-head'];
