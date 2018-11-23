@@ -18,11 +18,18 @@ class PlatformShFacade
     protected $client;
 
     /**
+     * Timeout for retrying calls.
+     *
+     * @var int
+     */
+    protected $timeout;
+    /**
      * Create new facade for client.
      */
-    public function __construct(PlatformClient $client)
+    public function __construct(PlatformClient $client, $timeout = 60)
     {
         $this->client = $client;
+        $this->timeout = $timeout;
     }
 
     /**
@@ -81,7 +88,15 @@ class PlatformShFacade
      */
     protected function getEnvironment(Project $project, $environmentName)
     {
-        $environment = $project->getEnvironment($environmentName);
+        $environment = null;
+        $start = time();
+        do {
+            $environment = $project->getEnvironment($environmentName);
+            if (!$environment && $this->timeout) {
+                sleep(1);
+            }
+        } while (!$environment && time() < $start + $this->timeout);
+
         if (!$environment) {
             throw new \RuntimeException(sprintf('Environment %s not found.', $environmentName));
         }

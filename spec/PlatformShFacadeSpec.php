@@ -36,9 +36,33 @@ class PlatformShFacadeSpec extends ObjectBehavior
     {
         $client->getProject('project_id')->willReturn($project);
 
-        $this->beConstructedWith($client);
+        // Use zero timeout to avoid retrying.
+        $this->beConstructedWith($client, 0);
 
         $this->shouldThrow(\RuntimeException::class)->duringWaitFor('project_id', 'env', 'sha');
+    }
+
+    function it_waits_for_environment(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
+    {
+        $activity->offsetExists('parameters')->willReturn(true);
+        $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
+        $activity->isComplete()->willReturn(false);
+        $activity->wait()->willReturn();
+        $environment->offsetGet('status')->willReturn('dirty');
+        $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
+        $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn([]);
+
+        // Let getEnvironment return null the first time it's called.
+        $project->getEnvironment('env')->will(function ($env) use ($environment, $project) {
+            $project->getEnvironment('env')->willReturn($environment);
+            return null;
+        });
+        $client->getProject('project_id')->willReturn($project);
+
+        $this->beConstructedWith($client);
+
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
     }
 
     function it_throws_error_if_environment_is_inactive(PlatformClient $client, Project $project, Environment $environment)
