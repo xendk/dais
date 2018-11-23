@@ -41,13 +41,10 @@ class PlatformShFacade
         }
 
         $activities = $environment->getActivities(10, 'environment.push');
-        $waitActivity = null;
-        foreach ($activities as $activity) {
-            if ($this->getSha($activity) == $sha) {
-                $waitActivity = $activity;
-                break;
-            }
-        }
+        $waitActivites = array_filter($activities, function(Activity $activity) use ($sha) {
+            return $this->getSha($activity) == $sha;
+        });
+        $waitActivity = array_shift($waitActivites);
 
         if (!$waitActivity) {
             throw new \RuntimeException(sprintf('Activity for sha %s not found.', $sha));
