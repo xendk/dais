@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Wait for up to a minute if environment or activity doesn't exist yet
 
 ## 0.7.4 - 2018-11-23
 ### Changed
