@@ -40,11 +40,10 @@ class PlatformShFacade
             throw new \RuntimeException(sprintf('Environment %s not active.', $environmentName));
         }
 
-        $activities = $environment->getActivities(10);
+        $activities = $environment->getActivities(10, 'environment.push');
         $waitActivity = null;
         foreach ($activities as $activity) {
-            if ($activity['type'] == 'environment.push' &&
-                $this->getSha($activity) == $sha) {
+            if ($this->getSha($activity) == $sha) {
                 $waitActivity = $activity;
                 break;
             }

@@ -65,12 +65,11 @@ class PlatformShFacadeSpec extends ObjectBehavior
 
     function it_finds_the_activity(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
-        $activity->offsetGet('type')->willReturn('environment.push');
         $activity->offsetExists('parameters')->willReturn(true);
         $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
         $activity->isComplete()->willReturn(true);
         $environment->offsetGet('status')->willReturn('active');
-        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
         $project->getEnvironment('env')->willReturn($environment);
@@ -83,12 +82,11 @@ class PlatformShFacadeSpec extends ObjectBehavior
 
     function it_finds_the_activity_for_post_merge_envs(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
-        $activity->offsetGet('type')->willReturn('environment.push');
         $activity->offsetExists('parameters')->willReturn(true);
         $activity->offsetGet('parameters')->willReturn(['github-pr-head' => 'sha', 'new_commit' => 'wrong sha']);
         $activity->isComplete()->willReturn(true);
         $environment->offsetGet('status')->willReturn('active');
-        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
         $project->getEnvironment('env')->willReturn($environment);
@@ -101,12 +99,11 @@ class PlatformShFacadeSpec extends ObjectBehavior
 
     function it_returns_route_urls(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
-        $activity->offsetGet('type')->willReturn('environment.push');
         $activity->offsetExists('parameters')->willReturn(true);
         $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
         $activity->isComplete()->willReturn(true);
         $environment->offsetGet('status')->willReturn('active');
-        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn(['route-url-1', 'route-url-2']);
         $project->getEnvironment('env')->willReturn($environment);
@@ -119,12 +116,11 @@ class PlatformShFacadeSpec extends ObjectBehavior
 
     function it_returns_route_urls_in_alphabetical_order(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
-        $activity->offsetGet('type')->willReturn('environment.push');
         $activity->offsetExists('parameters')->willReturn(true);
         $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
         $activity->isComplete()->willReturn(true);
         $environment->offsetGet('status')->willReturn('active');
-        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn(['www.the-url', 'api.the-url']);
         $project->getEnvironment('env')->willReturn($environment);
@@ -137,13 +133,12 @@ class PlatformShFacadeSpec extends ObjectBehavior
 
     function it_waits_on_incomplete_activity(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
-        $activity->offsetGet('type')->willReturn('environment.push');
         $activity->offsetExists('parameters')->willReturn(true);
         $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
         $activity->isComplete()->willReturn(false);
         $activity->wait()->willReturn();
         $environment->offsetGet('status')->willReturn('dirty');
-        $environment->getActivities(10)->willReturn([$activity]);
+        $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
         $project->getEnvironment('env')->willReturn($environment);
