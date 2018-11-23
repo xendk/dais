@@ -104,6 +104,28 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
     }
 
+    function it_waits_for_the_activity(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
+    {
+        $activity->offsetExists('parameters')->willReturn(true);
+        $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
+        $activity->isComplete()->willReturn(true);
+        $environment->offsetGet('status')->willReturn('active');
+
+        // Let getActivities return nothing the first time it's called.
+        $environment->getActivities(10, 'environment.push')->will(function () use ($activity, $environment) {
+            $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
+            return [];
+        });
+        $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn([]);
+        $project->getEnvironment('env')->willReturn($environment);
+        $client->getProject('project_id')->willReturn($project);
+
+        $this->beConstructedWith($client);
+
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
+    }
+
     function it_finds_the_activity_for_post_merge_envs(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
     {
         $activity->offsetExists('parameters')->willReturn(true);
@@ -172,4 +194,5 @@ class PlatformShFacadeSpec extends ObjectBehavior
 
         $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url']);
     }
+
 }

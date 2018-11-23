@@ -47,11 +47,14 @@ class PlatformShFacade
             throw new \RuntimeException(sprintf('Environment %s not active.', $environmentName));
         }
 
-        $activities = $environment->getActivities(10, 'environment.push');
-        $waitActivites = array_filter($activities, function (Activity $activity) use ($sha) {
-            return $this->getSha($activity) == $sha;
-        });
-        $waitActivity = array_shift($waitActivites);
+        $start = time();
+        do {
+            $activities = $environment->getActivities(10, 'environment.push');
+            $waitActivites = array_filter($activities, function (Activity $activity) use ($sha) {
+                return $this->getSha($activity) == $sha;
+            });
+            $waitActivity = array_shift($waitActivites);
+        } while (!$waitActivity && time() < $start + $this->timeout);
 
         if (!$waitActivity) {
             throw new \RuntimeException(sprintf('Activity for sha %s not found.', $sha));
