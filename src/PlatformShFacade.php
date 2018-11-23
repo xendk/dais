@@ -83,7 +83,7 @@ class PlatformShFacade
     {
         $environment = $project->getEnvironment($environmentName);
         if (!$environment) {
-            throw new \RuntimeException(sprintf('Environment %s not found.', $environment));
+            throw new \RuntimeException(sprintf('Environment %s not found.', $environmentName));
         }
 
         return $environment;
