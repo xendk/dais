@@ -733,16 +733,16 @@
         },
         {
             "name": "platformsh/client",
-            "version": "v0.23.2",
+            "version": "v0.23.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/platformsh/platformsh-client-php.git",
-                "reference": "028f723d4581b09c28f2ab5029b51a2e9363bd15"
+                "reference": "cd5f0955695169fa042d549807199eae5232fec2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/028f723d4581b09c28f2ab5029b51a2e9363bd15",
-                "reference": "028f723d4581b09c28f2ab5029b51a2e9363bd15",
+                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/cd5f0955695169fa042d549807199eae5232fec2",
+                "reference": "cd5f0955695169fa042d549807199eae5232fec2",
                 "shasum": ""
             },
             "require": {
@@ -778,7 +778,7 @@
                 }
             ],
             "description": "Platform.sh API client",
-            "time": "2019-01-16T17:37:27+00:00"
+            "time": "2019-04-08T16:53:41+00:00"
         },
         {
             "name": "psr/container",
@@ -2340,7 +2340,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
