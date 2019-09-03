@@ -52,6 +52,9 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
+        $environment->getData()->willReturn([
+            'http_access' => ['is_enabled' => false],
+        ]);
 
         // Let getEnvironment return null the first time it's called.
         $project->getEnvironment('env')->will(function ($env) use ($environment, $project) {
@@ -96,6 +99,9 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
+        $environment->getData()->willReturn([
+            'http_access' => ['is_enabled' => false],
+        ]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
@@ -118,6 +124,9 @@ class PlatformShFacadeSpec extends ObjectBehavior
         });
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
+        $environment->getData()->willReturn([
+            'http_access' => ['is_enabled' => false],
+        ]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
@@ -135,6 +144,9 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
+        $environment->getData()->willReturn([
+            'http_access' => ['is_enabled' => false],
+        ]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
@@ -152,12 +164,39 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn(['route-url-1', 'route-url-2']);
+        $environment->getData()->willReturn([
+            'http_access' => ['is_enabled' => false],
+        ]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
         $this->beConstructedWith($client);
 
         $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['the-url', 'route-url-1', 'route-url-2']);
+    }
+
+    function it_returns_urls_with_basic_auth(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
+    {
+        $activity->offsetExists('parameters')->willReturn(true);
+        $activity->offsetGet('parameters')->willReturn(['new_commit' => 'sha']);
+        $activity->isComplete()->willReturn(true);
+        $environment->offsetGet('status')->willReturn('active');
+        $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
+        $environment->getPublicUrl()->willReturn('http://the-url');
+        $environment->getRouteUrls()->willReturn(['http://route-url-1', 'https://route-url-2.tld']);
+        $environment->getData()->willReturn([
+            'http_access' => [
+                'is_enabled' => true,
+                'basic_auth' => ['user' => 'pw'],
+            ],
+        ]);
+        $project->getEnvironment('env')->willReturn($environment);
+        $client->getProject('project_id')->willReturn($project);
+
+
+        $this->beConstructedWith($client);
+
+        $this->waitFor('project_id', 'env', 'sha')->shouldReturn(['http://the-url', 'http://route-url-1', 'https://user:pw@route-url-2.tld']);
     }
 
     function it_returns_route_urls_in_alphabetical_order(PlatformClient $client, Project $project, Environment $environment, Activity $activity)
@@ -169,6 +208,9 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn(['www.the-url', 'api.the-url']);
+        $environment->getData()->willReturn([
+            'http_access' => ['is_enabled' => false],
+        ]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
@@ -187,6 +229,9 @@ class PlatformShFacadeSpec extends ObjectBehavior
         $environment->getActivities(10, 'environment.push')->willReturn([$activity]);
         $environment->getPublicUrl()->willReturn('the-url');
         $environment->getRouteUrls()->willReturn([]);
+        $environment->getData()->willReturn([
+            'http_access' => ['is_enabled' => false],
+        ]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
 
