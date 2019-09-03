@@ -2,6 +2,7 @@
 
 namespace Dais;
 
+use GuzzleHttp\Url;
 use Platformsh\Client\Model\Activity;
 use Platformsh\Client\PlatformClient;
 use Platformsh\Client\Model\Project;
@@ -67,10 +68,52 @@ class PlatformShFacade
         $routeUrls = $environment->getRouteUrls();
         // Platform.sh returns urls in a unpredictable order. Sort it alphabetically to make it predictable.
         sort($routeUrls);
-        return array_merge(
+        $urls = array_merge(
             [$environment->getPublicUrl()],
             $routeUrls
         );
+
+        return $this->ensureAuth($urls, $environment);
+    }
+
+    /**
+     * If Basic Auth is enabled apply it to all HTTPS urLs.
+     */
+    protected function ensureAuth($urls, $environment)
+    {
+        $data = $environment->getData();
+
+        if (!$data['http_access']['is_enabled'] || empty($data['http_access']['basic_auth'])) {
+            return $urls;
+        }
+
+        foreach ($urls as &$url) {
+            $url = $this->addAuthToHTTPSUrl($url, $data['http_access']['basic_auth']);
+        }
+
+        return $urls;
+    }
+
+    /**
+     * Apply basic auth to url if it is a  HTTPS urL.
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
+    protected function addAuthToHTTPSUrl($urlString, $basicAuth)
+    {
+        $url = Url::fromString($urlString);
+
+        if ($url->getScheme() !== 'https') {
+            return $urlString;
+        }
+
+        $username = key($basicAuth);
+        $password = $basicAuth[$username];
+
+        $url->setUsername($username);
+        $url->setPassword($password);
+
+        return (string) $url;
     }
 
     /**
