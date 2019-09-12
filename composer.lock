@@ -202,13 +202,13 @@
             "authors": [
                 {
                     "name": "Neuman Vong",
-                    "role": "Developer",
-                    "email": "neuman+pear@twilio.com"
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
                 },
                 {
                     "name": "Anant Narayanan",
-                    "role": "Developer",
-                    "email": "anant@php.net"
+                    "email": "anant@php.net",
+                    "role": "Developer"
                 }
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
@@ -689,16 +689,16 @@
         },
         {
             "name": "platformsh/client",
-            "version": "v0.29.1",
+            "version": "v0.29.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/platformsh/platformsh-client-php.git",
-                "reference": "9a79414a7cb770070e95a2d2c53c9f9c5bbc7878"
+                "reference": "d50ae49c0746a40bee992f9390f4c0d069be3419"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/9a79414a7cb770070e95a2d2c53c9f9c5bbc7878",
-                "reference": "9a79414a7cb770070e95a2d2c53c9f9c5bbc7878",
+                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/d50ae49c0746a40bee992f9390f4c0d069be3419",
+                "reference": "d50ae49c0746a40bee992f9390f4c0d069be3419",
                 "shasum": ""
             },
             "require": {
@@ -728,7 +728,7 @@
                 }
             ],
             "description": "Platform.sh API client",
-            "time": "2019-08-26T20:06:32+00:00"
+            "time": "2019-09-11T15:56:21+00:00"
         },
         {
             "name": "psr/container",
@@ -1609,8 +1609,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sb@sebastian-bergmann.de"
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -1657,8 +1657,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sb@sebastian-bergmann.de"
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -1699,8 +1699,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Simple template engine.",
@@ -2125,8 +2125,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
