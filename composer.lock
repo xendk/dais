@@ -217,16 +217,16 @@
         },
         {
             "name": "guzzlehttp/cache-subscriber",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/cache-subscriber.git",
-                "reference": "ecb903f6e11b5ca9f2cdbc460e2e68deea9e8858"
+                "reference": "8c766ba399e4c46383e3eaa220201be62abd101e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/cache-subscriber/zipball/ecb903f6e11b5ca9f2cdbc460e2e68deea9e8858",
-                "reference": "ecb903f6e11b5ca9f2cdbc460e2e68deea9e8858",
+                "url": "https://api.github.com/repos/guzzle/cache-subscriber/zipball/8c766ba399e4c46383e3eaa220201be62abd101e",
+                "reference": "8c766ba399e4c46383e3eaa220201be62abd101e",
                 "shasum": ""
             },
             "require": {
@@ -240,7 +240,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -265,7 +265,7 @@
                 "Guzzle",
                 "cache"
             ],
-            "time": "2014-10-29T21:06:25+00:00"
+            "time": "2019-09-16T13:44:55+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -689,16 +689,16 @@
         },
         {
             "name": "platformsh/client",
-            "version": "v0.29.2",
+            "version": "v0.29.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/platformsh/platformsh-client-php.git",
-                "reference": "d50ae49c0746a40bee992f9390f4c0d069be3419"
+                "reference": "db7ae5a7a3cccf480f967210a674d27a36ea5983"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/d50ae49c0746a40bee992f9390f4c0d069be3419",
-                "reference": "d50ae49c0746a40bee992f9390f4c0d069be3419",
+                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/db7ae5a7a3cccf480f967210a674d27a36ea5983",
+                "reference": "db7ae5a7a3cccf480f967210a674d27a36ea5983",
                 "shasum": ""
             },
             "require": {
@@ -728,7 +728,7 @@
                 }
             ],
             "description": "Platform.sh API client",
-            "time": "2019-09-11T15:56:21+00:00"
+            "time": "2019-09-18T16:11:51+00:00"
         },
         {
             "name": "psr/container",
