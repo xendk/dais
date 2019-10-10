@@ -689,16 +689,16 @@
         },
         {
             "name": "platformsh/client",
-            "version": "v0.30.1",
+            "version": "v0.30.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/platformsh/platformsh-client-php.git",
-                "reference": "255f211f0537e06e952a4d780dffbf9b325df64d"
+                "reference": "603b80d638d138df11a95f73d478b3cedddfc7fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/255f211f0537e06e952a4d780dffbf9b325df64d",
-                "reference": "255f211f0537e06e952a4d780dffbf9b325df64d",
+                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/603b80d638d138df11a95f73d478b3cedddfc7fb",
+                "reference": "603b80d638d138df11a95f73d478b3cedddfc7fb",
                 "shasum": ""
             },
             "require": {
@@ -728,7 +728,7 @@
                 }
             ],
             "description": "Platform.sh API client",
-            "time": "2019-09-24T12:55:06+00:00"
+            "time": "2019-10-09T13:41:49+00:00"
         },
         {
             "name": "psr/container",
@@ -1228,6 +1228,7 @@
                 "test",
                 "tests"
             ],
+            "abandoned": "friends-of-phpspec/phpspec-code-coverage",
             "time": "2017-10-17T13:54:43+00:00"
         },
         {
