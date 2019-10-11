@@ -42,15 +42,15 @@ class WaitCommand
         }
 
         $urls = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
-        $placeholder_urls = [];
+        $placeholderUrls = [];
         foreach ($urls as $index => $url) {
             $placeholder = ($index === 0) ? "%site-url%" : "%route-url:$index%";
-            $placeholder_urls[$placeholder] = rtrim($url, '/');
+            $placeholderUrls[$placeholder] = rtrim($url, '/');
         }
 
         foreach ($files as $file) {
             try {
-                $this->fileReplace($file, $placeholder_urls);
+                $this->fileReplace($file, $placeholderUrls);
             } catch (\RuntimeException $e) {
                 $io->error($e->getMessage());
             }
@@ -62,7 +62,7 @@ class WaitCommand
      *
      * Placeholders must be an map of placeholder strings and their corresponding values.
      */
-    protected function fileReplace($file, array $placeholder_map)
+    protected function fileReplace($file, array $placeholderMap)
     {
         if (!file_exists($file)) {
             throw new \RuntimeException($file . " does not exist.");
@@ -73,7 +73,7 @@ class WaitCommand
             throw new \RuntimeException("Could not read " . $file . ".");
         }
 
-        $content = strtr($content, $placeholder_map);
+        $content = strtr($content, $placeholderMap);
         if (file_put_contents($file, $content) === false) {
             throw new \RuntimeException("Error writing " . $file . ".");
         }
