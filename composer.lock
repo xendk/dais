@@ -690,16 +690,16 @@
         },
         {
             "name": "platformsh/client",
-            "version": "v0.31.0",
+            "version": "v0.31.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/platformsh/platformsh-client-php.git",
-                "reference": "880f5464894baff81d16ace340443601844a208c"
+                "reference": "6e1bd433ede4ca3c105415b91c7882fc13486222"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/880f5464894baff81d16ace340443601844a208c",
-                "reference": "880f5464894baff81d16ace340443601844a208c",
+                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/6e1bd433ede4ca3c105415b91c7882fc13486222",
+                "reference": "6e1bd433ede4ca3c105415b91c7882fc13486222",
                 "shasum": ""
             },
             "require": {
@@ -729,7 +729,7 @@
                 }
             ],
             "description": "Platform.sh API client",
-            "time": "2019-12-16T09:37:35+00:00"
+            "time": "2019-12-27T15:56:45+00:00"
         },
         {
             "name": "psr/container",
