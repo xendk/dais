@@ -266,6 +266,7 @@
                 "Guzzle",
                 "cache"
             ],
+            "abandoned": true,
             "time": "2019-09-16T13:44:55+00:00"
         },
         {
@@ -692,16 +693,16 @@
         },
         {
             "name": "platformsh/client",
-            "version": "v0.32.3",
+            "version": "0.38.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/platformsh/platformsh-client-php.git",
-                "reference": "ba215a99200d4e5a710382dac8f29402356c351a"
+                "reference": "2d9a5b05f5dddb9e078f0a53bcde1701ca39ffd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/ba215a99200d4e5a710382dac8f29402356c351a",
-                "reference": "ba215a99200d4e5a710382dac8f29402356c351a",
+                "url": "https://api.github.com/repos/platformsh/platformsh-client-php/zipball/2d9a5b05f5dddb9e078f0a53bcde1701ca39ffd3",
+                "reference": "2d9a5b05f5dddb9e078f0a53bcde1701ca39ffd3",
                 "shasum": ""
             },
             "require": {
@@ -731,7 +732,7 @@
                 }
             ],
             "description": "Platform.sh API client",
-            "time": "2020-04-15T22:42:00+00:00"
+            "time": "2020-08-17T14:52:55+00:00"
         },
         {
             "name": "psr/container",
@@ -831,23 +832,23 @@
         },
         {
             "name": "react/promise",
-            "version": "v2.7.1",
+            "version": "v2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d"
+                "reference": "f3cff96a19736714524ca0dd1d4130de73dbbbc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
-                "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/f3cff96a19736714524ca0dd1d4130de73dbbbc4",
+                "reference": "f3cff96a19736714524ca0dd1d4130de73dbbbc4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8"
+                "phpunit/phpunit": "^7.0 || ^6.5 || ^5.7 || ^4.8.36"
             },
             "type": "library",
             "autoload": {
@@ -873,7 +874,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2019-01-07T21:25:54+00:00"
+            "time": "2020-05-12T15:16:56+00:00"
         },
         {
             "name": "symfony/console",
@@ -1761,6 +1762,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-12-04T08:55:13+00:00"
         },
         {
@@ -2475,5 +2477,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "5.6"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
