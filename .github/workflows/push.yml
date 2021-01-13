@@ -1,0 +1,28 @@
+on: push
+name: Run tests
+jobs:
+  test-and-release:
+    name: Run tests
+    runs-on: ubuntu-latest
+    if: '!github.event.deleted'
+
+    strategy:
+      matrix:
+        php-version: ["7.3", "7.4"]
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Installing PHP
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php-version }}
+
+    - name: Install dependencies
+      run: composer install --no-interaction --no-progress
+
+    - name: Run spec tests
+      run: phpdbg -qrr ./vendor/bin/phpspec run -c .phpspec.coverage-ci.yml
+
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v1
