@@ -1,0 +1,35 @@
+---
+name: "Release"
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    runs-on: "ubuntu-latest"
+    if: '!github.event.deleted'
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Installing PHP
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: 7.3
+
+    - name: Install dependencies
+      run: composer install --no-dev --no-interaction --no-progress
+
+    - name: Build phar
+      run: |
+          wget https://github.com/box-project/box2/releases/download/2.7.5/box-2.7.5.phar
+          php box-2.7.5.phar build --no-interaction
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        files: |
+          dais-*.phar
