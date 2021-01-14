@@ -9,7 +9,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class WaitCommand
 {
     const PLATFORM_ID_ERROR = "Please set the DAIS_PLATFORMSH_ID env var to Platform.sh site.";
-    const CIRCLE_SHA1_ERROR = "Could not find a SHA from CircleCI.";
+    const SHA_ERROR = "Could not find a SHA from Github Action or CircleCI.";
+    const GITHUB_PULL_REQUEST_ERROR = "Could not find a pull request number from Github.";
     const CIRCLE_PULL_REQUEST_ERROR = "Could not find a pull request number from CircleCI.";
 
     /**
@@ -28,17 +29,33 @@ class WaitCommand
      */
     public function wait($files, Env $env, PlatformShFacade $facade, SymfonyStyle $io)
     {
-
         $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
-        $sha = $env->get('CIRCLE_SHA1', self::CIRCLE_SHA1_ERROR);
+        $github = false;
+
+        try {
+            $sha = $env->get('GITHUB_SHA', self::SHA_ERROR);
+            $github = true;
+        } catch (\RuntimeException $e) {
+            $sha = $env->get('CIRCLE_SHA1', self::SHA_ERROR);
+        }
 
         $prNum = '';
-        $pr = $env->get('CI_PULL_REQUEST', self::CIRCLE_PULL_REQUEST_ERROR);
-        if (preg_match('/(\d+)$/', $pr, $matches)) {
-            $prNum = $matches[1];
-        }
-        if (empty($prNum)) {
-            throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
+        if ($github) {
+            $pr = $env->get('GITHUB_REF', self::CIRCLE_PULL_REQUEST_ERROR);
+            if (preg_match('/^refs\/pull\/(\d+)\/merge$/', $pr, $matches)) {
+                $prNum = $matches[1];
+            }
+            if (empty($prNum)) {
+                throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
+            }
+        } else {
+            $pr = $env->get('CI_PULL_REQUEST', self::CIRCLE_PULL_REQUEST_ERROR);
+            if (preg_match('/(\d+)$/', $pr, $matches)) {
+                $prNum = $matches[1];
+            }
+            if (empty($prNum)) {
+                throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
+            }
         }
 
         $urls = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
