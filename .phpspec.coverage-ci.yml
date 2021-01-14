@@ -8,5 +8,4 @@ extensions:
       - clover
     output:
       clover: clover.xml
-      
-        
+formatter.name: pretty
