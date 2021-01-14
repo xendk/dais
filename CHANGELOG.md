@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+- Moved from Travis to Github Actions. Means there's now a development
+  release.
+
+### Removed
+- Dropped PHP 5.6, 7.0, 7.1 and 7.2 support. If you need to run on
+  these versions, use an older release.
 
 ## 0.8.1 - 2019-09-03
 ### Changed
