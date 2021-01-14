@@ -41,12 +41,12 @@ class WaitCommand
 
         $prNum = '';
         if ($github) {
-            $pr = $env->get('GITHUB_REF', self::CIRCLE_PULL_REQUEST_ERROR);
+            $pr = $env->get('GITHUB_REF', self::GITHUB_PULL_REQUEST_ERROR);
             if (preg_match('/^refs\/pull\/(\d+)\/merge$/', $pr, $matches)) {
                 $prNum = $matches[1];
             }
             if (empty($prNum)) {
-                throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
+                throw new \RuntimeException(self::GITHUB_PULL_REQUEST_ERROR);
             }
         } else {
             $pr = $env->get('CI_PULL_REQUEST', self::CIRCLE_PULL_REQUEST_ERROR);

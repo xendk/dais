@@ -12,6 +12,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class WaitCommandSpec extends ObjectBehavior
 {
+    function let(Env $env)
+    {
+        // Ensure that unknown variables will throw error per default.
+        $env->get(Argument::any(), Argument::any())->willThrow(new \RuntimeException());
+    }
     function it_is_initializable()
     {
         $this->shouldHaveType(WaitCommand::class);
@@ -32,7 +37,6 @@ class WaitCommandSpec extends ObjectBehavior
 
     function it_supports_circeci(Env $env, PlatformShFacade $facade, Environment $environment, SymfonyStyle $io)
     {
-        $env->get('GITHUB_SHA', Argument::any())->willThrow(new \RuntimeException());
         $env->get('DAIS_PLATFORMSH_ID', Argument::any())->willReturn('env');
         $env->get('CIRCLE_SHA1', Argument::any())->willReturn('sha');
         $env->get('CI_PULL_REQUEST', Argument::any())->willReturn('pull/25');
