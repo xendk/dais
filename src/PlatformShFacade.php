@@ -2,7 +2,7 @@
 
 namespace Dais;
 
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Uri;
 use Platformsh\Client\Model\Activity;
 use Platformsh\Client\PlatformClient;
 use Platformsh\Client\Model\Project;
@@ -101,7 +101,7 @@ class PlatformShFacade
      */
     protected function addAuthToHTTPSUrl($urlString, $basicAuth)
     {
-        $url = Url::fromString($urlString);
+        $url = new Uri($urlString);
 
         if ($url->getScheme() !== 'https') {
             return $urlString;
@@ -110,10 +110,7 @@ class PlatformShFacade
         $username = key($basicAuth);
         $password = $basicAuth[$username];
 
-        $url->setUsername($username);
-        $url->setPassword($password);
-
-        return (string) $url;
+        return (string) $url->withUserInfo($username, $password);
     }
 
     /**

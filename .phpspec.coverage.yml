@@ -4,3 +4,4 @@ suites:
     psr4_prefix: Dais
 extensions:
   LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension: ~
+formatter.name: pretty

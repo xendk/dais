@@ -81,6 +81,7 @@ class PlatformShFacadeSpec extends ObjectBehavior
 
     function it_throws_error_if_activity_not_found(PlatformClient $client, Project $project, Environment $environment)
     {
+        $environment->offsetGet('status')->willReturn('inactive');
         $environment->getActivities(10)->willReturn([]);
         $project->getEnvironment('env')->willReturn($environment);
         $client->getProject('project_id')->willReturn($project);
