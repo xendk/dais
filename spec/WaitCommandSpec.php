@@ -17,8 +17,22 @@ class WaitCommandSpec extends ObjectBehavior
         $this->shouldHaveType(WaitCommand::class);
     }
 
-    function it_waits_properly(Env $env, PlatformShFacade $facade, Environment $environment, SymfonyStyle $io)
+    function it_supports_github(Env $env, PlatformShFacade $facade, Environment $environment, SymfonyStyle $io)
     {
+        $env->get('DAIS_PLATFORMSH_ID', Argument::any())->willReturn('env');
+        $env->get('GITHUB_SHA', Argument::any())->willReturn('sha');
+        $env->get('GITHUB_REF', Argument::any())->willReturn('refs/pull/25/merge');
+        $environment->getPublicUrl()->willReturn('the-url');
+        $environment->getRouteUrls()->willReturn([]);
+        $facade->waitFor('env', 'pr-25', 'sha')->willReturn($environment)->shouldBeCalled();
+
+        // No return value to test.
+        $this->wait([], $env, $facade, $io);
+    }
+
+    function it_supports_circeci(Env $env, PlatformShFacade $facade, Environment $environment, SymfonyStyle $io)
+    {
+        $env->get('GITHUB_SHA', Argument::any())->willThrow(new \RuntimeException());
         $env->get('DAIS_PLATFORMSH_ID', Argument::any())->willReturn('env');
         $env->get('CIRCLE_SHA1', Argument::any())->willReturn('sha');
         $env->get('CI_PULL_REQUEST', Argument::any())->willReturn('pull/25');
