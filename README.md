@@ -1,7 +1,7 @@
 Dais
 ====
 
-[![Build Status](https://img.shields.io/travis/xendk/dais.svg?style=for-the-badge)](https://travis-ci.org/xendk/dais)
+[![Build Status](https://img.shields.io/github/workflow/status/xendk/dais/Run%20tests?style=for-the-badge)](https://github.com/xendk/dais/actions?query=workflow%3A%22Run+tests%22)
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/xendk/dais.svg?style=for-the-badge)](https://codeclimate.com/github/xendk/dais)
 [![Code Climate](https://img.shields.io/codeclimate/issues/xendk/dais.svg?style=for-the-badge)](https://codeclimate.com/github/xendk/dais)
 [![Codecov](https://img.shields.io/codecov/c/github/xendk/dais.svg?style=for-the-badge)](https://codecov.io/gh/xendk/dais/branch/master)
