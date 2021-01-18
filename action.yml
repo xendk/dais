@@ -1,0 +1,36 @@
+name: 'Wait for Platform.sh env with dais'
+description: 'Use dais to wait for a Platform.sh PR environment to become ready.'
+author: 'xendk'
+inputs:
+  platform_key:
+    description: 'Platform.sh API key'
+    required: true
+  platform_id:
+    description: 'Platform.sh site ID'
+    required: true
+  files:
+    description: 'Files where %site-url% will be replaced by the URL of the Platform.sh environment.'
+  # These last two is because Github apparently doesn't support the `github` context in run.args.
+  sha:
+    description: 'Commit SHA'
+    default: ${{ github.event.pull_request.head.sha }}
+  pr-number:
+    description: 'Pull Request number'
+    default: ${{ github.event.pull_request.number }}
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    DAIS_PLATFORMSH_KEY: ${{ inputs.platform_key }}
+    DAIS_PLATFORMSH_ID: ${{ inputs.platform_id }}
+  args:
+    - --sha
+    - ${{ inputs.sha }}
+    - --pr-number
+    - ${{ inputs.pr-number }}
+    - ${{ inputs.files }}
+
+branding:
+  icon: 'clock'
+  color: 'purple'
