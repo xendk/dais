@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Added
-- Github Actions support.
 - PHP 8 support.
 
 ### Changed
+- Now takes SHA and Pull Request number on the command line rather
+  than digging through environment variables. This should ensure
+  compatibility with the widest range of CIs.
 - Moved from Travis to Github Actions. Means there's now a development
   release.
 

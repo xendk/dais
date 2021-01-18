@@ -12,7 +12,12 @@ $app = new Silly\Edition\PhpDi\Application('Dais', '@git-version@');
 $container = $app->getContainer();
 $container->set(PlatformShFacade::class, DI\factory([PlatformShFacade::class, 'fromEnv']));
 
-$app->command('wait [files]*', 'Dais\\WaitCommand');
+$app->command('wait [--s|sha=] [--p|pr-number=] [files]*', 'Dais\\WaitCommand')
+    ->descriptions('Wait for Platform.sh PR environment to be ready', [
+        '--sha' => 'SHA of commit to wait for on environment',
+        '--pr-number' => 'Pull request number, determines environment to wait on',
+        'files' => 'Files to replace URL into'
+    ]);
 $app->setDefaultCommand('wait', true);
 
 $app->run();

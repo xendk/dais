@@ -8,70 +8,71 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class WaitCommand
 {
-    const PLATFORM_ID_ERROR = "Please set the DAIS_PLATFORMSH_ID env var to Platform.sh site.";
-    const SHA_ERROR = "Could not find a SHA from Github Action or CircleCI.";
-    const GITHUB_PULL_REQUEST_ERROR = "Could not find a pull request number from Github.";
-    const CIRCLE_PULL_REQUEST_ERROR = "Could not find a pull request number from CircleCI.";
+    public const PLATFORM_ID_ERROR = "Please set the DAIS_PLATFORMSH_ID env var to Platform.sh site";
+    public const MISSING_SHA_ERROR = "Please supply a SHA";
+    public const PR_NUM_ERROR = "Invalid pull request number \"%s\"";
 
     /**
      * Invoke the wait command.
      */
-    public function __invoke($files, Env $env, PlatformShFacade $facade, InputInterface $input, OutputInterface $output)
-    {
+    public function __invoke(
+        ?string $sha,
+        ?string $prNumber,
+        array $files,
+        Env $env,
+        PlatformShFacade $facade,
+        InputInterface $input,
+        OutputInterface $output
+    ) {
         // Sadly, Silly 1.5 can't inject this for us. So we create it here and
         // move the main logic to another method, so we can test it.
         $io = new SymfonyStyle($input, $output);
-        return $this->wait($files, $env, $facade, $io);
+        return $this->wait($sha, $prNumber, $files, $env, $facade, $io);
     }
 
     /**
      * Wait for environment.
      */
-    public function wait($files, Env $env, PlatformShFacade $facade, SymfonyStyle $io)
-    {
+    public function wait(
+        ?string $sha,
+        ?string $prNumber,
+        array $files,
+        Env $env,
+        PlatformShFacade $facade,
+        SymfonyStyle $io
+    ) {
         $platformId = $env->get('DAIS_PLATFORMSH_ID', self::PLATFORM_ID_ERROR);
-        $github = false;
 
-        try {
-            $sha = $env->get('GITHUB_SHA', self::SHA_ERROR);
-            $github = true;
-        } catch (\RuntimeException $e) {
-            $sha = $env->get('CIRCLE_SHA1', self::SHA_ERROR);
+        if (empty($sha)) {
+            throw new \RuntimeException(self::MISSING_SHA_ERROR);
         }
 
-        $prNum = '';
-        if ($github) {
-            $pr = $env->get('GITHUB_REF', self::GITHUB_PULL_REQUEST_ERROR);
-            if (preg_match('/^refs\/pull\/(\d+)\/merge$/', $pr, $matches)) {
-                $prNum = $matches[1];
-            }
-            if (empty($prNum)) {
-                throw new \RuntimeException(self::GITHUB_PULL_REQUEST_ERROR);
-            }
+        if (preg_match('/^[^\d]*(\d+)[^\d]*$/', $prNumber, $matches)) {
+            $prNumber = $matches[1];
         } else {
-            $pr = $env->get('CI_PULL_REQUEST', self::CIRCLE_PULL_REQUEST_ERROR);
-            if (preg_match('/(\d+)$/', $pr, $matches)) {
-                $prNum = $matches[1];
-            }
-            if (empty($prNum)) {
-                throw new \RuntimeException(self::CIRCLE_PULL_REQUEST_ERROR);
-            }
+            throw new \RuntimeException(sprintf(self::PR_NUM_ERROR, $prNumber));
         }
 
-        $urls = $facade->waitFor($platformId, 'pr-' . $prNum, $sha);
+        $urls = $facade->waitFor($platformId, 'pr-' . $prNumber, $sha);
         $placeholderUrls = [];
+
         foreach ($urls as $index => $url) {
             $placeholder = ($index === 0) ? "%site-url%" : "%route-url:$index%";
             $placeholderUrls[$placeholder] = rtrim($url, '/');
         }
 
+        $error = false;
         foreach ($files as $file) {
             try {
                 $this->fileReplace($file, $placeholderUrls);
             } catch (\RuntimeException $e) {
                 $io->error($e->getMessage());
+                $error = true;
             }
         }
+
+        // Set return code for command.
+        return $error ? 1 : 0;
     }
 
     /**
