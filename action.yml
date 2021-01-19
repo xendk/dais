@@ -13,7 +13,7 @@ inputs:
   # These last two is because Github apparently doesn't support the `github` context in run.args.
   sha:
     description: 'Commit SHA'
-    default: ${{ github.event.pull_request.head.sha }}
+    default: ${{ github.sha }}
   pr-number:
     description: 'Pull Request number'
     default: ${{ github.event.pull_request.number }}
