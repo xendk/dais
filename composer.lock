@@ -1705,16 +1705,16 @@
         },
         {
             "name": "friends-of-phpspec/phpspec-code-coverage",
-            "version": "v6.0.0",
+            "version": "v6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/friends-of-phpspec/phpspec-code-coverage.git",
-                "reference": "d1957ce0f380c2f8b5b19b7ed7cd6e0a1b15f91e"
+                "reference": "cb6177eb8ce45cdde990ff3e6db3b44fbbb17364"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/friends-of-phpspec/phpspec-code-coverage/zipball/d1957ce0f380c2f8b5b19b7ed7cd6e0a1b15f91e",
-                "reference": "d1957ce0f380c2f8b5b19b7ed7cd6e0a1b15f91e",
+                "url": "https://api.github.com/repos/friends-of-phpspec/phpspec-code-coverage/zipball/cb6177eb8ce45cdde990ff3e6db3b44fbbb17364",
+                "reference": "cb6177eb8ce45cdde990ff3e6db3b44fbbb17364",
                 "shasum": ""
             },
             "require": {
@@ -1726,7 +1726,8 @@
                 "sebastian/comparator": "< 2.0"
             },
             "require-dev": {
-                "drupol/php-conventions": "^1.7.1 || ^1.8.16"
+                "drupol/php-conventions": "^3.0",
+                "vimeo/psalm": "^4.7"
             },
             "suggest": {
                 "ext-pcov": "Install PCov extension to generate code coverage.",
@@ -1739,12 +1740,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "FriendsOfPhpSpec\\PhpSpec\\CodeCoverage\\": "src/"
-                },
                 "files": [
                     "src/bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "FriendsOfPhpSpec\\PhpSpec\\CodeCoverage\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1771,7 +1772,7 @@
                 },
                 {
                     "name": "Jay Linski",
-                    "homepage": "https://twitter.com/jay_linski"
+                    "homepage": "https://github.com/jaylinski"
                 }
             ],
             "description": "Generate Code Coverage reports for PhpSpec tests",
@@ -1790,7 +1791,7 @@
                 "issues": "https://github.com/friends-of-phpspec/phpspec-code-coverage/issues",
                 "source": "https://github.com/friends-of-phpspec/phpspec-code-coverage"
             },
-            "time": "2020-11-30T10:53:05+00:00"
+            "time": "2021-03-30T20:51:42+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3425,7 +3426,7 @@
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.3"
+        "php": "7.4"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
