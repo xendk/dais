@@ -9,4 +9,4 @@ COPY . /src
 
 RUN composer install --no-dev --no-interaction --no-progress
 
-ENTRYPOINT ["/src/dais"]
+ENTRYPOINT ["/src/entrypoint.sh"]
