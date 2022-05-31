@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   release.
 
 ### Removed
-- Dropped PHP 5.6, 7.0, 7.1 and 7.2 support. If you need to run on
+- Dropped PHP 5.6, 7.0, 7.1, 7.2 and 7.3 support. If you need to run on
   these versions, use an older release.
 
 ## 0.8.1 - 2019-09-03
