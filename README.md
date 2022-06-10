@@ -61,8 +61,8 @@ jobs:
       - run: |
           echo "date.timezone = UTC" | sudo tee /usr/local/etc/php/conf.d/date.ini
           composer install
-          wget https://github.com/xendk/dais/releases/download/0.8.1/dais-0.8.1.phar
-          php dais-0.8.1.phar --sha $CIRCLE_SHA1 --pr-number $CI_PULL_REQUEST behat.yml
+          wget https://github.com/xendk/dais/releases/download/0.9.0/dais-0.9.0.phar
+          php dais-0.9.0.phar --sha $CIRCLE_SHA1 --pr-number $CI_PULL_REQUEST behat.yml
           ./vendor/bin/behat --format=junit --out=/tmp/test-reports/behat --format=pretty --out=std
       - store_test_results:
           path: /tmp/test-reports/
@@ -71,5 +71,5 @@ jobs:
 The equivalent command for Github Actions:
 
 ```
-php dais-0.8.1.phar --sha ${{github.event.pull_request.head.sha}} --pr-number ${{github.event.pull_request.number}} behat.yml
+php dais-0.9.0.phar --sha ${{github.event.pull_request.head.sha}} --pr-number ${{github.event.pull_request.number}} behat.yml
 ```
